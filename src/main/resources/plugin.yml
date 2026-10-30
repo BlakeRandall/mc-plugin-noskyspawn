@@ -1,0 +1,6 @@
+name: NoSkySpawns
+version: "${version}"
+main: dev.example.noskyspawns.NoSkySpawnsPlugin
+api-version: "26.1"
+description: Restricts natural hostile mob spawning to locations without direct sky access.
+author: Example
