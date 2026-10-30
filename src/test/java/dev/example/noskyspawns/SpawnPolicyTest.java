@@ -8,17 +8,38 @@ import org.junit.jupiter.api.Test;
 class SpawnPolicyTest {
 
     @Test
-    void blocksSpawnAboveSurface() {
-        assertTrue(SpawnPolicy.isSkyExposed(64, 63));
+    void blocksSpawnWhenSkyLightIsPresent() {
+        assertTrue(
+                SpawnPolicy.shouldBlockSpawn(1, false)
+        );
     }
 
     @Test
-    void allowsSpawnBelowSurfaceEvenAtHighYLevel() {
-        assertFalse(SpawnPolicy.isSkyExposed(70, 90));
+    void blocksSpawnWhenDirectSkyAccessExists() {
+        assertTrue(
+                SpawnPolicy.shouldBlockSpawn(0, true)
+        );
     }
 
     @Test
-    void allowsSpawnAtOrBelowHighestBlockingBlock() {
-        assertFalse(SpawnPolicy.isSkyExposed(63, 63));
+    void blocksSpawnWhenBothConditionsAreTrue() {
+        assertTrue(
+                SpawnPolicy.shouldBlockSpawn(15, true)
+        );
+    }
+
+    @Test
+    void allowsSpawnWhenThereIsNoSkyLightOrDirectSkyAccess() {
+        assertFalse(
+                SpawnPolicy.shouldBlockSpawn(0, false)
+        );
+    }
+
+    @Test
+    void allowsCaveSpawningAtAnyHeight() {
+        // Height is intentionally not part of the policy.
+        assertFalse(
+                SpawnPolicy.shouldBlockSpawn(0, false)
+        );
     }
 }
