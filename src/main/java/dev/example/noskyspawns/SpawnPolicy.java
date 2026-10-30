@@ -1,16 +1,26 @@
 package dev.example.noskyspawns;
 
-/** Pure policy helper, kept separate so the rule can be unit-tested. */
+/**
+ * Determines whether a natural hostile mob spawn
+ * should be blocked based on sky exposure.
+ */
 final class SpawnPolicy {
 
     private SpawnPolicy() {
     }
 
     /**
-     * A spawn point is sky-exposed when its feet block is above the highest
-     * motion-blocking block in the same X/Z column.
+     * Blocks spawning if either:
+     *
+     * 1. The location receives any sky light.
+     * 2. There is a direct vertical path to the sky.
+     *
+     * Both conditions must be false for spawning to be allowed.
      */
-    static boolean isSkyExposed(int spawnY, int highestMotionBlockingY) {
-        return spawnY > highestMotionBlockingY;
+    static boolean shouldBlockSpawn(
+            int skyLight,
+            boolean hasDirectSkyAccess
+    ) {
+        return skyLight > 0 || hasDirectSkyAccess;
     }
 }
