@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.SpawnCategory;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -48,6 +49,10 @@ public final class NoSkySpawnsPlugin extends JavaPlugin
         // Only affect hostile mobs.
         if (event.getEntity().getSpawnCategory()
                 != SpawnCategory.MONSTER) {
+            return;
+        }
+
+        if (event.getEntity().getType() == EntityType.PILLAGER) {
             return;
         }
 
